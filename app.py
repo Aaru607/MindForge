@@ -16,140 +16,138 @@ st.set_page_config(
 if 'page' not in st.session_state:
     st.session_state.page = "Home"
 
-# Custom CSS
+# Custom CSS with responsive design
 st.markdown("""
     <style>
-    .main {
-        padding: 0rem 1rem;
+    /* Base styles */
+    :root {
+        --primary-color: #FF4B4B;
+        --text-color: #1E1E1E;
+        --bg-light: #f8f9fa;
+        --spacing-unit: 1rem;
     }
+
+    /* Responsive container */
+    .main {
+        padding: 0 var(--spacing-unit);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Responsive typography */
+    @media (max-width: 768px) {
+        h1 { font-size: 1.8rem !important; }
+        h2 { font-size: 1.5rem !important; }
+        h3 { font-size: 1.2rem !important; }
+        p { font-size: 0.9rem !important; }
+    }
+
+    /* Responsive buttons */
     .stButton>button {
         width: 100%;
-        background-color: #FF4B4B;
+        background-color: var(--primary-color);
         color: white;
         border-radius: 10px;
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
+        font-size: clamp(0.8rem, 2vw, 1rem);
     }
-    .stButton>button:hover {
-        background-color: #FF6B6B;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .stat-box {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 1.5rem;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-    }
-    .stat-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    }
-    h1, h2, h3 {
-        color: #1E1E1E;
-    }
-    .highlight {
-        background: linear-gradient(120deg, #FF4B4B20 0%, #FF4B4B20 100%);
-        background-repeat: no-repeat;
-        background-size: 100% 0.4em;
-        background-position: 0 88%;
-        transition: background-size 0.25s ease-in;
-    }
-    .highlight:hover {
-        background-size: 100% 100%;
-    }
+
+    /* Responsive cards */
     .feature-card {
         border: 1px solid #f0f0f0;
         border-radius: 15px;
-        padding: 1.5rem;
+        padding: clamp(1rem, 3vw, 1.5rem);
         margin: 0.5rem 0;
         background: white;
         transition: all 0.3s ease;
+        height: 100%;
     }
-    .feature-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
-    
-    /* New Sidebar Styles */
-    .sidebar .sidebar-content {
-        background-color: #f8f9fa;
-    }
-    
-    .sidebar-title {
+
+    /* Responsive stat boxes */
+    .stat-box {
+        background-color: var(--bg-light);
+        border-radius: 10px;
+        padding: clamp(0.8rem, 2vw, 1.5rem);
         text-align: center;
-        padding: 1rem 0;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #FF4B4B20;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        margin-bottom: var(--spacing-unit);
     }
-    
+
+    /* Responsive sidebar */
+    .sidebar .sidebar-content {
+        background-color: var(--bg-light);
+        padding: clamp(0.5rem, 2vw, 1rem);
+    }
+
+    @media (max-width: 768px) {
+        .sidebar .sidebar-content {
+            padding: 0.5rem;
+        }
+        .profile-image {
+            width: 60px !important;
+            height: 60px !important;
+        }
+        .nav-link {
+            padding: 0.5rem !important;
+        }
+    }
+
+    /* Responsive profile section */
+    .profile-section {
+        text-align: center;
+        padding: clamp(0.5rem, 2vw, 1rem);
+        margin-bottom: clamp(1rem, 3vw, 2rem);
+    }
+
+    .profile-image {
+        width: clamp(80px, 15vw, 100px);
+        height: clamp(80px, 15vw, 100px);
+        border-radius: 50%;
+        margin: 0 auto;
+        border: 3px solid var(--primary-color);
+        padding: 3px;
+    }
+
+    /* Responsive grid layouts */
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--spacing-unit);
+        padding: var(--spacing-unit) 0;
+    }
+
+    /* Responsive charts */
+    .chart-container {
+        width: 100%;
+        min-height: 300px;
+        max-height: 500px;
+    }
+
+    /* Responsive navigation */
     .nav-link {
-        padding: 0.75rem 1rem;
+        padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 2vw, 1rem);
         margin: 0.5rem 0;
         border-radius: 10px;
         background-color: white;
         transition: all 0.3s ease;
-        text-decoration: none;
-        color: #1E1E1E;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        font-size: clamp(0.8rem, 2vw, 1rem);
     }
-    
-    .nav-link:hover {
-        background-color: #FF4B4B10;
-        transform: translateX(5px);
+
+    /* Responsive testimonials */
+    .testimonial-card {
+        padding: clamp(1rem, 3vw, 1.5rem);
+        border-left: 4px solid var(--primary-color);
+        margin: clamp(0.5rem, 2vw, 1rem) 0;
+        background-color: white;
+        border-radius: 0 10px 10px 0;
     }
-    
-    .nav-link.active {
-        background-color: #FF4B4B;
-        color: white;
-    }
-    
-    .sidebar-footer {
-        position: fixed;
-        bottom: 0;
-        padding: 1rem;
-        width: 100%;
-        background-color: #f8f9fa;
-        border-top: 1px solid #FF4B4B20;
-        text-align: center;
-    }
-    
-    .profile-section {
-        text-align: center;
-        padding: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .profile-image {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        margin: 0 auto;
-        border: 3px solid #FF4B4B;
-        padding: 3px;
-    }
-    
-    .progress-ring {
-        margin: 1rem auto;
-        position: relative;
-        width: 120px;
-        height: 120px;
-    }
-    
-    .notification-badge {
-        background-color: #FF4B4B;
-        color: white;
-        border-radius: 50%;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.8rem;
-        position: absolute;
-        top: -5px;
-        right: -5px;
-    }
+
+    /* Utility classes for responsive spacing */
+    .mt-responsive { margin-top: clamp(1rem, 3vw, 2rem); }
+    .mb-responsive { margin-bottom: clamp(1rem, 3vw, 2rem); }
+    .p-responsive { padding: clamp(1rem, 3vw, 2rem); }
     </style>
 """, unsafe_allow_html=True)
 
@@ -253,59 +251,43 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
 
-# Main content
+# Main content with responsive layouts
 if st.session_state.page == "Home":
-    # Hero Section
+    # Hero Section with responsive design
     st.markdown("""
-        <div style='text-align: center; padding: 2rem 0;'>
-            <h1 style='font-size: 3rem; margin-bottom: 1rem;'>Welcome to <span class='highlight'>MindForge</span> 🚀</h1>
-            <p style='font-size: 1.2rem; color: #666; margin-bottom: 2rem;'>
+        <div style='text-align: center; padding: clamp(1rem, 5vw, 3rem) 0;'>
+            <h1 style='font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem;'>
+                Welcome to <span class='highlight'>MindForge</span> 🚀
+            </h1>
+            <p style='font-size: clamp(1rem, 2vw, 1.2rem); color: #666; margin-bottom: 2rem;'>
                 Your AI-Powered Career Guidance Companion
             </p>
         </div>
     """, unsafe_allow_html=True)
-    
-    # Key Statistics
-    st.markdown("### Platform Impact 📊")
-    stats_col1, stats_col2, stats_col3, stats_col4 = st.columns(4)
-    
-    with stats_col1:
-        st.markdown("""
+
+    # Responsive statistics grid
+    st.markdown("<div class='grid-container'>", unsafe_allow_html=True)
+    for stat in [
+        {"number": "10K+", "label": "Students Guided"},
+        {"number": "500+", "label": "Career Paths"},
+        {"number": "95%", "label": "Success Rate"},
+        {"number": "24/7", "label": "AI Support"}
+    ]:
+        st.markdown(f"""
             <div class='stat-box'>
-                <h2 style='color: #FF4B4B; font-size: 2rem;'>10K+</h2>
-                <p>Students Guided</p>
+                <h2 style='color: var(--primary-color); font-size: clamp(1.5rem, 3vw, 2rem);'>
+                    {stat['number']}
+                </h2>
+                <p style='color: var(--text-color); font-size: clamp(1.5rem, 0, 2rem);'>{stat['label']}</p>
             </div>
         """, unsafe_allow_html=True)
-    
-    with stats_col2:
-        st.markdown("""
-            <div class='stat-box'>
-                <h2 style='color: #FF4B4B; font-size: 2rem;'>500+</h2>
-                <p>Career Paths</p>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    with stats_col3:
-        st.markdown("""
-            <div class='stat-box'>
-                <h2 style='color: #FF4B4B; font-size: 2rem;'>95%</h2>
-                <p>Success Rate</p>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    with stats_col4:
-        st.markdown("""
-            <div class='stat-box'>
-                <h2 style='color: #FF4B4B; font-size: 2rem;'>24/7</h2>
-                <p>AI Support</p>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    # Interactive Demo Section
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Interactive Demo Section with responsive layout
     st.markdown("---")
-    demo_col1, demo_col2 = st.columns([2, 1])
+    cols = st.columns([2, 1])
     
-    with demo_col1:
+    with cols[0]:
         st.markdown("### Try Our Quick Career Match! 🎯")
         interest_areas = st.multiselect(
             "Select your areas of interest:",
@@ -322,99 +304,71 @@ if st.session_state.page == "Home":
             "Preferred work environment:",
             ["Remote", "Office", "Hybrid", "Field Work"]
         )
-        
-        if st.button("Get Quick Career Match"):
-            if interest_areas:
-                st.success("Based on your preferences, here are some recommended career paths:")
-                for area in interest_areas:
-                    if area == "Technology":
-                        st.write("🖥️ Software Development")
-                        st.write("📊 Data Science")
-                    elif area == "Science":
-                        st.write("🔬 Research Scientist")
-                        st.write("🧬 Biotechnology")
-                    elif area == "Business":
-                        st.write("📈 Business Analyst")
-                        st.write("💼 Project Management")
-    
-    with demo_col2:
-        st.image("https://img.freepik.com/free-vector/career-progress-concept-illustration_114360-5339.jpg",
-                 caption="Discover Your Path")
-        
-        # Success Stories Counter
-        st.markdown("""
-            <div style='text-align: center; margin-top: 2rem;'>
-                <h4>Success Stories Today</h4>
-                <h2 style='color: #FF4B4B; font-size: 2.5rem;'>127</h2>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    # Features Section
-    st.markdown("---")
+
+    with cols[1]:
+        st.image("https://img.freepik.com/free-photo/thinking-man-with-suit_1154-106.jpg?ga=GA1.1.1303681271.1747159330&semt=ais_hybrid&w=740",
+                 use_column_width=True)
+
+    # Features grid with responsive cards
     st.markdown("### How MindForge Helps You 🌟")
+    st.markdown("<div class='grid-container'>", unsafe_allow_html=True)
     
-    features_col1, features_col2, features_col3 = st.columns(3)
+    features = [
+        {
+            "icon": "🎯",
+            "title": "Career Assessment",
+            "description": "Discover careers that match your interests and skills",
+            "metric": "20 minutes to complete"
+        },
+        {
+            "icon": "🔍",
+            "title": "Career Explorer",
+            "description": "Explore different career paths and prospects",
+            "metric": "500+ career paths"
+        },
+        {
+            "icon": "📚",
+            "title": "Learning Resources",
+            "description": "Access curated materials for your career path",
+            "metric": "1000+ resources"
+        }
+    ]
     
-    with features_col1:
-        st.markdown("""
+    for feature in features:
+        st.markdown(f"""
             <div class='feature-card'>
-                <h3>🎯 Career Assessment</h3>
-                <p>Take our comprehensive assessment to discover careers that match your interests, skills, and values.</p>
-                <br/>
-                <small style='color: #FF4B4B;'>20 minutes to complete</small>
+                <h3>{feature['icon']} {feature['title']}</h3>
+                <p>{feature['description']}</p>
+                <small style='color: var(--primary-color);'>{feature['metric']}</small>
             </div>
         """, unsafe_allow_html=True)
-        if st.button("Start Assessment", key="home_assessment"):
-            st.session_state.page = "Career Assessment"
     
-    with features_col2:
-        st.markdown("""
-            <div class='feature-card'>
-                <h3>🔍 Career Explorer</h3>
-                <p>Explore different career paths, required skills, and future prospects in various fields.</p>
-                <br/>
-                <small style='color: #FF4B4B;'>500+ career paths</small>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Explore Careers", key="home_explorer"):
-            st.session_state.page = "Career Explorer"
-    
-    with features_col3:
-        st.markdown("""
-            <div class='feature-card'>
-                <h3>📚 Learning Resources</h3>
-                <p>Access curated resources, tutorials, and guidance materials for your chosen career path.</p>
-                <br/>
-                <small style='color: #FF4B4B;'>1000+ resources</small>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("View Resources", key="home_resources"):
-            st.session_state.page = "Resources"
-    
-    # Testimonials Section
-    st.markdown("---")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Responsive testimonials
     st.markdown("### Success Stories 💫")
+    testimonial_cols = st.columns(2)
     
-    testimonials_col1, testimonials_col2 = st.columns(2)
+    testimonials = [
+        {
+            "quote": "MindForge helped me discover my passion for data science. Now I'm working at my dream company!",
+            "author": "Sarah P., Data Scientist"
+        },
+        {
+            "quote": "The career guidance I received was invaluable. It helped me make an informed decision about my future.",
+            "author": "James R., Software Engineer"
+        }
+    ]
     
-    with testimonials_col1:
-        st.markdown("""
-            <div style='padding: 1.5rem; border-left: 4px solid #FF4B4B; margin: 1rem 0;'>
-                <p style='font-style: italic;'>"MindForge helped me discover my passion for data science. 
-                Now I'm working at my dream company!"</p>
-                <p style='color: #666;'>- Sarah P., Data Scientist</p>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    with testimonials_col2:
-        st.markdown("""
-            <div style='padding: 1.5rem; border-left: 4px solid #FF4B4B; margin: 1rem 0;'>
-                <p style='font-style: italic;'>"The career guidance I received was invaluable. 
-                It helped me make an informed decision about my future."</p>
-                <p style='color: #666;'>- James R., Software Engineer</p>
-            </div>
-        """, unsafe_allow_html=True)
-    
+    for i, testimonial in enumerate(testimonials):
+        with testimonial_cols[i]:
+            st.markdown(f"""
+                <div class='testimonial-card'>
+                    <p style='color: #666;font-style: italic;'>{testimonial["quote"]}</p>
+                    <p style='color: #666;'>- {testimonial["author"]}</p>
+                </div>
+            """, unsafe_allow_html=True)
+
     # Call to Action
     st.markdown("---")
     st.markdown("""
