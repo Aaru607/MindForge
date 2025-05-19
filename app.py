@@ -1,16 +1,27 @@
 import streamlit as st
-import pandas as pd
-import plotly.express as px
-from PIL import Image
-import numpy as np
-
-# Page configuration
+# Page configuration must be the first Streamlit command
 st.set_page_config(
     page_title="MindForge - Career Guidance Platform",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+
+import pandas as pd
+import plotly.express as px
+from PIL import Image
+import numpy as np
+from login import show_login_page, logout
+
+# Initialize session state for authentication
+if 'user' not in st.session_state:
+    st.session_state.user = None
+
+# Show login page if user is not authenticated
+if not st.session_state.user:
+    show_login_page()
+    st.stop()
 
 # Initialize session state for page navigation if not exists
 if 'page' not in st.session_state:
@@ -231,10 +242,15 @@ with st.sidebar:
         <div class='profile-section'>
             <img src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg' 
                  class='profile-image'>
-            <h3 style='margin-top: 1rem;'>Welcome Back!</h3>
+            <h3 style='margin-top: 1rem;'>Welcome {email}!</h3>
             <p style='color: #666;'>Your Career Journey Awaits</p>
         </div>
-    """, unsafe_allow_html=True)
+    """.format(email=st.session_state.user["email"]), unsafe_allow_html=True)
+    
+    # Logout button
+    if st.button("Logout"):
+        logout()
+        st.stop()
     
     # Progress Ring
     st.markdown("""
