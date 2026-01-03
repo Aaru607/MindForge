@@ -1,51 +1,108 @@
-# MindForge - Career Guidance Platform 🧠
+🧠 MindForge – AI-Assisted Career Guidance Platform
 
-MindForge is a data-driven career guidance platform designed to bridge the gap between urban and rural students' access to career counseling resources. The platform provides personalized career path planning through comprehensive assessments, resource libraries, and interactive tools.
+MindForge is a data-driven career guidance platform designed to help students make informed career decisions through structured assessments and explainable recommendations. The platform focuses on transforming user assessment data into clear, actionable career insights using deterministic logic enhanced with AI-generated explanations.
 
-## Features
+✨ Features
 
-- 📊 Interactive Career Assessment
-- 🎯 Personalized Career Recommendations
-- 🔍 Career Path Explorer
-- 📚 Educational Resources
-- 📈 Personal Progress Dashboard
+📊 Structured Career Assessment
+Multi-dimensional assessment covering aptitude and interest areas.
 
-## Installation
+🎯 Personalized Career Recommendations
+Deterministic, explainable ranking of careers based on assessment scores.
 
-1. Ensure you have Python 3.8+ installed on your system
-2. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/mindforge.git
-   cd mindforge
-   ```
-3. Install required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+📚 Guided Learning Paths
+Career-specific learning roadmaps highlighting skills to develop and next steps.
 
-## Running the Application
+💡 AI-Assisted Guidance
+AI is used to generate human-readable explanations and guidance, not for decision-making.
 
-To start the MindForge platform:
+📈 User Profile & Progress Tracking
+View assessment history, saved careers, and learning milestones.
 
-```bash
+🛠️ Tech Stack
+
+Frontend: Streamlit
+
+Backend: FastAPI (async APIs)
+
+Database: MongoDB
+
+AI Integration: Anthropic Claude (for explanations only)
+
+Language: Python
+
+🚀 Installation
+
+Ensure Python 3.9+ is installed on your system.
+
+Clone the repository:
+
+git clone https://github.com/your-username/MindForge.git
+cd MindForge
+
+
+Create and activate a virtual environment:
+
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+▶️ Running the Application
+Start the Backend
+cd backend
+uvicorn main:app --reload
+
+Start the Frontend
+cd frontend
 streamlit run app.py
-```
 
-The application will open in your default web browser at `http://localhost:8501`
 
-## Project Structure
+The application will be available at:
+http://localhost:8501
 
-```
+📁 Project Structure
 mindforge/
-├── app.py              # Main application file
-├── requirements.txt    # Project dependencies
-└── README.md          # Project documentation
-```
+├── backend/                 # FastAPI backend services
+│   ├── api/                 # API routes
+│   ├── services/            # Core business logic
+│   ├── models/              # Data models
+│   └── database/            # Database clients & seed scripts
+│
+├── frontend/                # Streamlit application
+│   ├── pages/               # Multi-page UI
+│   ├── components/          # Reusable UI components
+│   └── utils/               # Session & API helpers
+│
+├── scripts/                 # Utility scripts
+├── requirements.txt         # Project dependencies
+└── README.md                # Project documentation
 
-## Contributing
+🧠 How MindForge Works
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Users complete a structured career assessment.
 
-## License
+Assessment scores are processed using deterministic scoring logic.
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+Careers are ranked based on aptitude and interest alignment.
+
+AI generates explanations and guidance for the ranked results.
+
+Users receive recommendations and personalized learning paths.
+
+🧪 Testing
+
+To run backend tests:
+
+pytest backend/tests/ -v
+
+🤝 Contributing
+
+Contributions are welcome. Please open an issue or submit a pull request for improvements or fixes.
+
+📄 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
