@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mindforge-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mindforge-frontend
+  template:
+    metadata:
+      labels:
+        app: mindforge-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: yourdockerhub/mindforge-frontend:latest
+          ports:
+            - containerPort: 8501
