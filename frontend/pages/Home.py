@@ -9,7 +9,7 @@ st.set_page_config(
 
 init_session_state()
 
-st.title("🧠 Welcome to MindForge")
+st.title("Welcome to MindForge")
 st.markdown("### Your AI-Powered Career Intelligence Platform")
 
 col1, col2 = st.columns([2, 1])
@@ -24,11 +24,11 @@ with col1:
     - **💡 Expert Guidance**: AI-driven insights and actionable advice
     """)
     
-    if st.button("🚀 Start Your Journey", type="primary", use_container_width=True):
-        st.switch_page("pages/2_📝_Assessment.py")
+    if st.button(" Start Your Journey", type="primary", use_container_width=True):
+        st.switch_page("Assessment.py")
 
 with col2:
-    st.info("💼 **For Students & Professionals**\n\nWhether you're exploring options or planning a career transition, MindForge provides data-driven guidance.")
+    st.info("**For Students & Professionals**\n\nWhether you're exploring options or planning a career transition, MindForge provides data-driven guidance.")
 
 st.markdown("---")
 col1, col2, col3, col4 = st.columns(4)
