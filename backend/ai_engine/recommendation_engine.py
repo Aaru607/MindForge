@@ -1,57 +1,40 @@
-import json
+import datetime
 import logging
 logger = logging.getLogger(__name__)
 
-def generate_career_recommendation(user_profile, llm_client):
+async def generate_career_recommendations(user_id, assessment_data):
     """
-    Main function to take user data and get career advice from the AI.
-    Handles the prompt building and basic parsing of the AI's response.
+    Main function to calculate career matches. 
+    It takes the user's test scores and compares them against our database.
     """
-    if not user_profile.get("skills") or not user_profile.get("career_goal"):
-        logger.error("User profile is missing key data")
-        return {"error": "Incomplete profile"}
-    skills_list = ", ".join(user_profile["skills"])
-    interest_list = ", ".join(user_profile.get("interests", ["General Development"]))
-    system_msg = (
-        "You are a career coach. Based on the user's data, provide exactly 3 career paths. "
-        "Return the response in a valid JSON format with keys: 'role', 'why', and 'steps'."
-    )
-    
-    user_msg = f"""
-    Here is my profile:
-    - Skills: {skills_list}
-    - Interests: {interest_list}
-    - Goal: {user_profile['career_goal']}
-    - Level: {user_profile.get('experience_level', 'Entry-level')}
-    
-    Please give me specific, non-generic advice.
-    """
-
+    if not assessment_data:
+        logger.error(f"No assessment data found for user {user_id}")
+        return []
     try:
-        raw_response = llm_client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": system_msg},
-                {"role": "user", "content": user_msg}
-            ],
-            temperature=0.7 
-        )
-        
-        content = raw_response.choices[0].message.content
-        
-        try:
-            structured_data = json.loads(content)
-        except json.JSONDecodeError:
-            logger.warning("AI didn't return perfect JSON. Attempting to clean string.")
-            content = content.replace("```json", "").replace("```", "").strip()
-            structured_data = json.loads(content)
-
-        return {
-            "status": "success",
-            "data": structured_data,
-            "version": "v1.2"
-        }
-
+        user_profile = await mongo_client.get_user_profile(user_id)
+        top_category = assessment_data.get('aptitude_scores', {}).get('primary')
+        career_candidates = await db_client.fetch_careers_by_category(top_category)
     except Exception as e:
-        logger.exception("Something went wrong with the LLM call")
-        return {"status": "error", "message": str(e)}
+        logger.error(f"Database error: {e}")
+        return []
+    recommendations = []
+    for career in career_candidates:
+        aptitude_score = assessment_data['aptitude_scores'].get(career.required_field, 0)
+        interest_score = assessment_data['interest_profiles'].get(career.type, 0)
+        base_score = (aptitude_score * 0.5) + (interest_score * 0.3) + (50 * 0.2)
+        if career.demand == "High":
+            base_score += 10
+        elif career.demand == "Low":
+            base_score -= 10
+        recommendations.append({
+            "career_id": career.id,
+            "title": career.title,
+            "match_percent": round(base_score, 2),
+            "reasoning": f"Matches your interest in {career.type} and high aptitude scores.",
+            "salary": career.salary_range,
+            "created_at": datetime.datetime.now().isoformat()
+        })
+    recommendations.sort(key=lambda x: x['match_percent'], reverse=True)
+    cache_key = f"user_rec_{user_id}"
+    await redis_cache.set(cache_key, recommendations, expire=3600)
+    return recommendations[:5]
