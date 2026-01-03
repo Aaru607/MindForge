@@ -1,91 +1,63 @@
-🧠 MindForge – AI-Assisted Career Guidance Platform
 
---
+# MindForge - Career Guidance Platform 🧠
 
-MindForge is a data-driven career guidance platform designed to help students make informed career decisions through structured assessments and explainable recommendations.
+MindForge is a data-driven career guidance platform designed to bridge the gap between urban and rural students' access to career counseling resources. The platform provides personalized career path planning through comprehensive assessments, resource libraries, and interactive tools.
 
---
+## Features
 
-🚀 Installation
+- 📊 Interactive Career Assessment
+- 🎯 Personalized Career Recommendations
+- 🔍 Career Path Explorer
+- 📚 Educational Resources
+- 📈 Personal Progress Dashboard
 
---
+## Installation
 
--- Ensure Python 3.9+ is installed on your system
+1. Ensure you have Python 3.8+ installed on your system
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/yourusername/mindforge.git
+   cd mindforge
+   ```
+3. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
--- Clone the repository
-git clone https://github.com/your-username/MindForge.git
-cd MindForge
+## Running the Application
 
--- Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+To start the MindForge platform:
 
--- Install project dependencies
-pip install -r requirements.txt
-
-
---
-
-▶️ Running the Application
-
---
-
--- Start the backend service
-cd backend
-uvicorn main:app --reload
-
--- Start the frontend application
-cd frontend
+```bash
 streamlit run app.py
+```
 
--- Access the application in your browser
-http://localhost:8501
+The application will open in your default web browser at `http://localhost:8501`
 
+## Project Structure
 
---
-
-🧪 Testing
-
---
-
--- Run backend unit tests
-pytest backend/tests/ -v
-
-
---
-
-📁 Project Structure
-
---
-
--- High-level repository layout
+```
 mindforge/
 ├── backend/                 # FastAPI backend services
+│   ├── api/                 # API routes
+│   ├── services/            # Core business logic
+│   ├── models/              # Data models
+│   └── database/            # Database clients & seed scripts
+│
 ├── frontend/                # Streamlit application
+│   ├── pages/               # Multi-page UI
+│   ├── components/          # Reusable UI components
+│   └── utils/               # Session & API helpers
+│
 ├── scripts/                 # Utility scripts
 ├── requirements.txt         # Project dependencies
 └── README.md                # Project documentation
+```
 
+## Contributing
 
---
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-✅ Why This Format Works
+## License
 
--- acts like inline command annotations
-
-Commands remain copy-paste friendly
-
-Looks like real engineering runbooks
-
-Clear separation between instruction and command
-
-Reviewers immediately understand execution flow
-
-This is not markdown misuse — it’s a deliberate documentation style.
-
-❗ One Important Rule (Follow This)
-
-✔ Keep -- inside code blocks only
-❌ Do NOT mix -- with markdown bullets outside code blocks
-
-You’ve done it correctly here.
+This project is licensed under the MIT License - see the LICENSE file for details. 
