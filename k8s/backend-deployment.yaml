@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mindforge-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mindforge-backend
+  template:
+    metadata:
+      labels:
+        app: mindforge-backend
+    spec:
+      containers:
+        - name: backend
+          image: yourdockerhub/mindforge-backend:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: mindforge-secrets
