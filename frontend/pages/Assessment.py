@@ -12,7 +12,7 @@ st.set_page_config(
 init_session_state()
 api = APIClient()
 
-st.title("📝 Career Assessment")
+st.title(" Career Assessment")
 if 'assessment_started' not in st.session_state:
     st.session_state.assessment_started = False
 if 'current_question' not in st.session_state:
@@ -104,7 +104,7 @@ else:
                 st.session_state.current_question += 1
                 st.rerun()
     else:
-        st.success("🎉 Assessment Complete!")
+        st.success("Assessment Complete!")
         st.balloons()
         
         st.markdown("""
@@ -123,4 +123,4 @@ else:
                 import time
                 time.sleep(2)
             
-            st.switch_page("pages/3_🎯_Recommendations.py")
+            st.switch_page("Recommendations.py")
