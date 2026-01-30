@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mindforge-login",
+        "httpMethod": "POST"
+      },
+      "name": "Login Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/login-event",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "={{$json}}"
+      },
+      "name": "Call MindForge Backend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [450, 300]
+    }
+  ],
+  "connections": {
+    "Login Webhook": {
+      "main": [
+        [
+          {
+            "node": "Call MindForge Backend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
